@@ -1,0 +1,6 @@
+Chitrapathak - Indic AI Model
+
+
+Odia OCR -
+- https://www.odiagenai.org/blog/odia-lipi-digitizing-odia-script-through-ocr-and-multimodal-llm
+- https://huggingface.co/OdiaGenAIOCR/odia-ocr-qwen-finetuned
