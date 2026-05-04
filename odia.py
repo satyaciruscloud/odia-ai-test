@@ -157,8 +157,8 @@ def save_transcript_to_txt(transcript_text, audio_file_path):
 
 # Full Pipeline Execution
 # audio_path = "type.flac"
-# audio_path = "audio.flac"
-audio_path = "audio32type.flac"
+audio_path = "audio_full.flac"
+# audio_path = "audio32type.flac"
 
 # Load audio
 wav, sr = load_audio(audio_path)
