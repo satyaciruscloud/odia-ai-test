@@ -16,6 +16,49 @@ os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN")
 # Load the model
 model = AutoModel.from_pretrained("ai4bharat/indic-conformer-600m-multilingual", trust_remote_code=True)
 
+folder_path = "output_splits"
+
+if os.path.isdir(folder_path):
+    file_paths = []
+
+    for file in os.listdir(folder_path):
+        full_path = f"{folder_path}/{file}"
+
+        if os.path.isfile(full_path):
+            if file.endswith(".flac"):
+                file_paths.append(full_path)  # ✅ keep relative path
+            else:
+                print(f"Skipping non-FLAC file: {file}")
+
+    for file_path in file_paths:
+        print(file_path)
+
+    print("------------------------------------------------------")
+    print("Transcription Started")
+    print("------------------------------------------------------")
+
+    for file_path in file_paths:
+        print(f"Transcription Started for ======= {file_path}")
+
+        print("Loading audio file")
+        wav, sr = torchaudio.load(file_path)
+        wav = torch.mean(wav, dim=0, keepdim=True)
+        target_sample_rate = 16000  # Expected sample rate
+        if sr != target_sample_rate:
+            resampler = torchaudio.transforms.Resample(orig_freq=sr, new_freq=target_sample_rate)
+            wav = resampler(wav)
+        
+        # Perform ASR with CTC decoding
+        transcription_ctc = model(wav, "or", "ctc")
+        transcription_rnnt = model(wav, "or", "rnnt")
+
+        # write 
+        with open('example.txt', 'a', encoding='utf-8') as f:
+          f.write(f"\n\n\n ==================================== \n {file_path} \n\n\n ctc: \n {transcription_ctc} \n\n\n rnnt: \n {transcription_rnnt}")
+
+
+else:
+    print("Folder does not exist.")
 
 
 # Load Audio + Resample to 16 kHz
@@ -161,34 +204,34 @@ audio_path = "audio_full.flac"
 # audio_path = "audio32type.flac"
 
 # Load audio
-wav, sr = load_audio(audio_path)
+# wav, sr = load_audio(audio_path)
 
 # Get speech regions
-segments = get_vad_segments(wav, sr)
+# segments = get_vad_segments(wav, sr)
 
 # Create chunks
-chunks = split_segments_into_chunks(
-    wav,
-    segments,
-    sr,
-    max_duration=15,
-    overlap=1
-)
+# chunks = split_segments_into_chunks(
+#     wav,
+#     segments,
+#     sr,
+#     max_duration=15,
+#     overlap=1
+# )
 
 # Run transcription
-transcripts = transcribe_chunks(
-    model=model,
-    chunks=chunks,
-    language="or",
-    decoding="rnnt",
-    batch_size=4
-)
+# transcripts = transcribe_chunks(
+#     model=model,
+#     chunks=chunks,
+#     language="or",
+#     decoding="rnnt",
+#     batch_size=4
+# )
 
 # Final output
-final_transcript = merge_transcripts(transcripts)
+# final_transcript = merge_transcripts(transcripts)
 
-print("\nFINAL TRANSCRIPT:\n")
-print(final_transcript)
+# print("\nFINAL TRANSCRIPT:\n")
+# print(final_transcript)
 
-docx_path = save_transcript_to_txt(final_transcript, audio_path)
-print(f"\nTranscript saved to Word file: {docx_path}")
+# docx_path = save_transcript_to_txt(final_transcript, audio_path)
+# print(f"\nTranscript saved to Word file: {docx_path}")

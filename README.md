@@ -99,3 +99,8 @@ uv run python split_and_transcribe.py audio_full.flac -p --workers 4
 **Output file** — saved at `output_splits/{base}_transcript.txt` with both per-chunk labels and a full merged transcript at the bottom.
 
 **`--lang` flag** — you can swap `or` → `hi`, `bn`, `te` etc. for other Indic languages without touching code.
+
+
+```shell
+uv run python odia_transcribe.py
+```

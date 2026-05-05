@@ -13,3 +13,5 @@ wheels/
 /output_splits
 
 __tmp*
+
+example.txt
