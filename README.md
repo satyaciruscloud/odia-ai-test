@@ -45,4 +45,8 @@ print(ocr_image("odia_word.png"))
 
 "
 ତ ସିଏ ମୋତେ ଜବରଦସ୍ତି ଫୋର୍ସ କଲେ କରିବା ପାଇଁକା ସେ ମୁଭିଟା ବଟ୍ ମୋ ଘରେ ଯେହେତୁ ଟିପିକାଲ୍ ମିଡିଲ୍ କ୍ଲାସ୍ ଫ୍ୟାମିଲିର ଓଡ଼ିଆ ବ୍ରାହ୍ମଣ ଘର ଫ୍ୟାମିଲି ତ ଘରେ ଓଡ଼ିଆ ଘରେ ୟୁନୋ ହିରୋଇନ ହେଲେ କଣ କିଏ ବାହା ହେବ
+
+
+uv run python split_audio.py audio_full.flac -o output_splits/ -n audio --max-sec 30
+
 "

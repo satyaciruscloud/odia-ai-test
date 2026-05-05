@@ -355,6 +355,3 @@ if __name__ == "__main__":
         padding_ms    = args.padding,
         output_format = args.format,
     )
-
-
-split_audio("audio_full.flac")

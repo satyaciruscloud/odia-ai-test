@@ -9,3 +9,7 @@ wheels/
 # Virtual environments
 .venv
 .env
+
+/output_splits
+
+__tmp*
